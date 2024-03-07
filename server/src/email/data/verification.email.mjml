@@ -1,0 +1,39 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+
+        <!-- Header -->
+        <mj-text font-size="20px" color="#333333" font-family="Helvetica, Arial, sans-serif">
+          Hello {{firstName}},
+        </mj-text>
+
+        <!-- Verification Message -->
+        <mj-text font-size="16px" color="#555555" font-family="Helvetica, Arial, sans-serif">
+          Thank you for registering with Dine Line! Please use the verification code and link below to activate your account.
+        </mj-text>
+
+        <!-- Verification Code -->
+        <mj-text font-size="16px" color="#555555" font-family="Helvetica, Arial, sans-serif">
+          Your verification code: <strong>{{verificationCode}}</strong>
+        </mj-text>
+
+        <!-- Verification Link -->
+        <mj-button background-color="#1A82E2" href="{{verificationLink}}" align="center">
+          Verify Your Account
+        </mj-button>
+
+        <!-- Footer Note -->
+        <mj-text font-size="14px" color="#888888" font-family="Helvetica, Arial, sans-serif" padding-top="20px">
+          If you did not request this email, please ignore it. This is an automated message, please do not reply.
+        </mj-text>
+
+        <mj-text font-size="14px" color="#888888" font-family="Helvetica, Arial, sans-serif">
+          Thanks,<br/>
+          The Dine Line Team
+        </mj-text>
+
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
