@@ -1,3 +1,4 @@
+import { AdminService } from './services/admin/admin.service';
 import { PasswordResetService } from './services/password-reset/password-reset.service';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { TTL_ONE_MINUTE } from './../common/constants';
@@ -22,6 +23,7 @@ import { Throttle } from '@nestjs/throttler';
 import { TTL_ONE_HOUR } from 'src/common/constants';
 import { RecoverPasswordDto } from './dto/recover-password.dto';
 import { Public } from 'src/common/decorators/public.decorator';
+import { AdminLoginDto } from './dto/admin-login.dto';
 
 @Public()
 @Controller('iam')
@@ -30,6 +32,7 @@ export class IamController {
     private readonly authnService: AuthnService,
     private readonly verificationService: VerificationService,
     private readonly passwordResetService: PasswordResetService,
+    private readonly adminService: AdminService,
   ) {}
 
   @Post('register')
@@ -41,6 +44,17 @@ export class IamController {
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
     return await this.authnService.login(loginDto);
+  }
+  @Throttle({ custom: { limit: 5, ttl: TTL_ONE_HOUR } })
+  @Post('admin/login')
+  async adminLogin(@Body() adminLoginDto: AdminLoginDto) {
+    return await this.adminService.login(adminLoginDto);
+  }
+
+  @Throttle({ custom: { limit: 5, ttl: TTL_ONE_HOUR } })
+  @Get('admin/refresh/:token')
+  async adminRefresh(@Param('token') token: string) {
+    return await this.adminService.refresh(token);
   }
 
   @Get('refresh/:token')

@@ -11,8 +11,16 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthnGuard } from './iam/services/authn/authn.guard';
 import { EmailModule } from './email/email.module';
 import { BullModule } from '@nestjs/bull';
+import { AddressModule } from './address/address.module';
+import { ImageModule } from './image/image.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { MenuItemModule } from './menu-item/menu-item.module';
+import path from 'path';
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: path.join(process.cwd(), 'public'),
+    }),
     ConfigModule.forRoot({
       envFilePath: ['.env'],
       isGlobal: true,
@@ -57,6 +65,9 @@ import { BullModule } from '@nestjs/bull';
     }),
     IamModule,
     EmailModule,
+    AddressModule,
+    ImageModule,
+    MenuItemModule,
   ],
   controllers: [AppController],
   providers: [

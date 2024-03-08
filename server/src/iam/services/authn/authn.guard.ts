@@ -8,11 +8,14 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
+import { AdminService } from '../admin/admin.service';
+import { IS_ADMIN_ROUTE_KEY } from 'src/common/decorators/admin-route.decorator';
 
 @Injectable()
 export class AuthnGuard implements CanActivate {
   constructor(
     private readonly jwtService: JwtService,
+    private readonly adminService: AdminService,
     private readonly reflector: Reflector,
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -21,6 +24,10 @@ export class AuthnGuard implements CanActivate {
       context.getHandler(),
       context.getClass(),
     ]);
+    const isAdminRoute = this.reflector.getAllAndOverride<boolean>(
+      IS_ADMIN_ROUTE_KEY,
+      [context.getHandler(), context.getClass()],
+    );
 
     //Skip if it is a public route
     if (isPublic) {
@@ -46,7 +53,21 @@ export class AuthnGuard implements CanActivate {
 
       //Add payload sub to request
       const payload = await this.jwtService.decodeToken(token);
-      request['userId'] = payload.sub;
+
+      //Check if it is admin
+      if (parseInt(payload.isAdmin) === 1) {
+        if (isAdminRoute) {
+          const admin = await this.adminService.getById(Number(payload.sub));
+
+          if (!admin) {
+            throw new UnauthorizedException('Invalid Access Token.');
+          }
+          return true;
+        }
+        throw new UnauthorizedException('Invalid Access Token.');
+      }
+
+      request['userId'] = parseInt(payload.sub);
     } catch (error: any) {
       throw new UnauthorizedException('Invalid Access Token.');
     }

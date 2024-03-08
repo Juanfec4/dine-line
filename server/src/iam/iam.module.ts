@@ -12,11 +12,18 @@ import { PasswordResetToken } from './services/password-reset/entity/password-re
 import { VerificationService } from './services/verification/verification.service';
 import { VerificationToken } from './services/verification/entity/verification-token.entity';
 import { EmailModule } from 'src/email/email.module';
+import { AdminService } from './services/admin/admin.service';
+import { Admin } from './services/admin/admin.entity.dto';
 
 @Module({
   imports: [
     ConfigModule,
-    TypeOrmModule.forFeature([User, PasswordResetToken, VerificationToken]),
+    TypeOrmModule.forFeature([
+      User,
+      Admin,
+      PasswordResetToken,
+      VerificationToken,
+    ]),
     EmailModule,
   ],
   providers: [
@@ -26,8 +33,9 @@ import { EmailModule } from 'src/email/email.module';
     HashingService,
     PasswordResetService,
     VerificationService,
+    AdminService,
   ],
   controllers: [IamController],
-  exports: [UserService, JwtService],
+  exports: [UserService, JwtService, AdminService],
 })
 export class IamModule {}

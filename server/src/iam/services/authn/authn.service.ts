@@ -31,13 +31,13 @@ export class AuthnService {
     //Generate tokens
     const accessToken = await this.jwtService.generateToken(
       'access',
-      { sub: user.id },
+      { sub: user.id, isAdmin: 0 },
       IN_1_HOUR,
     );
 
     const refreshToken = await this.jwtService.generateToken(
       'refresh',
-      { sub: user.id },
+      { sub: user.id, isAdmin: 0 },
       IN_7_DAYS,
     );
 
@@ -75,7 +75,7 @@ export class AuthnService {
     //Generate new access token
     const accessToken = await this.jwtService.generateToken(
       'access',
-      { sub: Number(decoded.sub) },
+      { sub: Number(decoded.sub), isAdmin: Number(decoded.isAdmin) },
       IN_1_HOUR,
     );
 

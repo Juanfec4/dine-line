@@ -33,4 +33,8 @@ export default () => ({
     from: process.env.MAIL_FROM,
     service: process.env.MAIL_SERVICE,
   },
+  admin: {
+    username: process.env.ADMIN_USER,
+    password: process.env.ADMIN_PASS,
+  },
 });

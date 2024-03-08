@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { PasswordResetToken } from '../../password-reset/entity/password-reset-token.entity';
+import { Address } from 'src/address/entity/address.entity';
 
 @Entity()
 export class User {
@@ -47,6 +48,9 @@ export class User {
     (verificationToken) => verificationToken.user,
   )
   verificationTokens: VerificationToken[];
+
+  @OneToMany(() => Address, (address) => address.user)
+  addresses: Address[];
 
   @CreateDateColumn()
   createdAt: Date;

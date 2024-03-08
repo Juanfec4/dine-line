@@ -8,3 +8,5 @@ export const TTL_ONE_HOUR = 60 * 60_000;
 export const TTL_ONE_MINUTE = 1 * 60_000;
 
 export const MAIL_TRANSPORTER = 'MAIL_TRANSPORTER';
+
+export const FOUR_HUNDRED_KB = 400 * 1_000;

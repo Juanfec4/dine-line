@@ -21,4 +21,6 @@ export default Joi.object({
   MAIL_PASS: Joi.string(),
   MAIL_FROM: Joi.string(),
   MAIL_SERVICE: Joi.string(),
+  ADMIN_USER: Joi.string(),
+  ADMIN_PASS: Joi.string(),
 });
