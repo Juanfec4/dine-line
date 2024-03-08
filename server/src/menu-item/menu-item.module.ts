@@ -10,5 +10,6 @@ import { ImageModule } from 'src/image/image.module';
   imports: [TypeOrmModule.forFeature([MenuItem, ItemCategory]), ImageModule],
   providers: [MenuItemService],
   controllers: [MenuItemController],
+  exports: [MenuItemService],
 })
 export class MenuItemModule {}

@@ -19,3 +19,9 @@ export enum EmailSubject {
   VERIFICATION = 'Dine Line verification code',
   PASSWORD_CHANGE = 'Dine Line password recovery',
 }
+
+export enum ReviewFilterType {
+  USER = 'user',
+  MENU_ITEM = 'menu-item',
+  ANY = 'any',
+}

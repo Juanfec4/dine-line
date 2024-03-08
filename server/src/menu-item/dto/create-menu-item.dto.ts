@@ -1,21 +1,22 @@
-import { IsBoolean, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsString, MaxLength } from 'class-validator';
 
 export class CreateMenuItemDto {
   @IsString()
-  imageFilePath: string;
+  readonly imageFilePath: string;
 
   @IsString()
-  name: string;
+  readonly name: string;
 
   @IsNumber()
-  price: number;
+  readonly price: number;
 
   @IsString()
-  description: string;
+  @MaxLength(150)
+  readonly description: string;
 
   @IsBoolean()
-  isAvailable: boolean;
+  readonly isAvailable: boolean;
 
   @IsString()
-  category: string;
+  readonly category: string;
 }

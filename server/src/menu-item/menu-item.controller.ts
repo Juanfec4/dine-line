@@ -15,6 +15,7 @@ import { Public } from 'src/common/decorators/public.decorator';
 import { CreateMenuItemDto } from './dto/create-menu-item.dto';
 import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
 import { Request } from 'express';
+import { GetMenuItemsQueryDto } from './dto/get-menu-items-query.dto';
 
 @Controller('menu-item')
 export class MenuItemController {
@@ -22,11 +23,9 @@ export class MenuItemController {
 
   @Public()
   @Get('/')
-  async getAll(
-    @Query('page') page: number,
-    @Query('pageSize') pageSize: number,
-    @Query('categoryId') categoryId: number,
-  ) {
+  async getAll(@Query() queryParams: GetMenuItemsQueryDto) {
+    let { page, pageSize, categoryId } = queryParams;
+
     page = page || 1;
     pageSize = pageSize || 10;
 
@@ -51,7 +50,7 @@ export class MenuItemController {
     @Req() req: Request,
     @Body() createMenuItemDto: CreateMenuItemDto,
   ) {
-    const baseUrl = `${req.protocol}://${req.get('Host')}/uploads`;
+    const baseUrl = `${req.protocol}://${req.get('Host')}/media`;
     return await this.menuItemService.create(baseUrl, createMenuItemDto);
   }
 
@@ -62,7 +61,7 @@ export class MenuItemController {
     @Param('id') id: number,
     @Body() updateMenuItemDto: UpdateMenuItemDto,
   ) {
-    const baseUrl = `${req.protocol}://${req.get('Host')}/uploads`;
+    const baseUrl = `${req.protocol}://${req.get('Host')}/media`;
     return await this.menuItemService.update(id, baseUrl, updateMenuItemDto);
   }
 

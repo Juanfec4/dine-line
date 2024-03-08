@@ -26,7 +26,7 @@ export class ImageController {
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
-        destination: path.join(process.cwd(), 'public', 'uploads'),
+        destination: path.join(process.cwd(), 'public', 'media'),
         filename: (req, file, callback) => {
           const fileExtName = extname(file.originalname);
           const randomName = nanoid(10);

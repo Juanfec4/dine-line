@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { PasswordResetToken } from '../../password-reset/entity/password-reset-token.entity';
 import { Address } from 'src/address/entity/address.entity';
+import { Review } from 'src/review/entity/review.entity';
 
 @Entity()
 export class User {
@@ -51,6 +52,9 @@ export class User {
 
   @OneToMany(() => Address, (address) => address.user)
   addresses: Address[];
+
+  @OneToMany(() => Review, (review) => review.user)
+  reviews: Review[];
 
   @CreateDateColumn()
   createdAt: Date;

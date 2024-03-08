@@ -1,3 +1,4 @@
+import { GetAddressesQueryDto } from './dto/get-addresses-query.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { AddressService } from './address.service';
@@ -17,10 +18,9 @@ export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
   @Get('/')
-  async getAll(
-    @Query('page') page?: number,
-    @Query('pageSize') pageSize?: number,
-  ) {
+  async getAll(@Query() queryParams: GetAddressesQueryDto) {
+    let { page, pageSize } = queryParams;
+
     page = page || 1;
     pageSize = pageSize || 10;
 

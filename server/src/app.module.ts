@@ -15,6 +15,7 @@ import { AddressModule } from './address/address.module';
 import { ImageModule } from './image/image.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MenuItemModule } from './menu-item/menu-item.module';
+import { ReviewModule } from './review/review.module';
 import path from 'path';
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import path from 'path';
     AddressModule,
     ImageModule,
     MenuItemModule,
+    ReviewModule,
   ],
   controllers: [AppController],
   providers: [
