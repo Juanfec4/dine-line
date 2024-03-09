@@ -16,6 +16,7 @@ import { ImageModule } from './image/image.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MenuItemModule } from './menu-item/menu-item.module';
 import { ReviewModule } from './review/review.module';
+import { FavoriteModule } from './favorite/favorite.module';
 import path from 'path';
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import path from 'path';
     ImageModule,
     MenuItemModule,
     ReviewModule,
+    FavoriteModule,
   ],
   controllers: [AppController],
   providers: [

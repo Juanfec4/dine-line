@@ -16,6 +16,7 @@ import { CreateMenuItemDto } from './dto/create-menu-item.dto';
 import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
 import { Request } from 'express';
 import { GetMenuItemsQueryDto } from './dto/get-menu-items-query.dto';
+import { ParamIdDto } from 'src/common/dto/param-id.dto';
 
 @Controller('menu-item')
 export class MenuItemController {
@@ -40,8 +41,8 @@ export class MenuItemController {
 
   @Public()
   @Get('/:id')
-  async getOne(@Param('id') id: number) {
-    return await this.menuItemService.getOne(id);
+  async getOne(@Param() param: ParamIdDto) {
+    return await this.menuItemService.getOne(param.id);
   }
 
   @AdminRoute()
@@ -58,16 +59,20 @@ export class MenuItemController {
   @Patch('/:id')
   async update(
     @Req() req: Request,
-    @Param('id') id: number,
+    @Param() param: ParamIdDto,
     @Body() updateMenuItemDto: UpdateMenuItemDto,
   ) {
     const baseUrl = `${req.protocol}://${req.get('Host')}/media`;
-    return await this.menuItemService.update(id, baseUrl, updateMenuItemDto);
+    return await this.menuItemService.update(
+      param.id,
+      baseUrl,
+      updateMenuItemDto,
+    );
   }
 
   @AdminRoute()
   @Delete('/:id')
-  async delete(@Param('id') id: number) {
-    return await this.menuItemService.delete(id);
+  async delete(@Param() param: ParamIdDto) {
+    return await this.menuItemService.delete(param.id);
   }
 }

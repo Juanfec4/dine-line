@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { Public } from 'src/common/decorators/public.decorator';
 import { UpdateReviewDto } from './dto/update-review.dto';
+import { ParamIdDto } from 'src/common/dto/param-id.dto';
 
 @Controller('review')
 export class ReviewController {
@@ -33,8 +34,8 @@ export class ReviewController {
 
   @Public()
   @Get('/:id')
-  async getOne(@Param('id') id: number) {
-    return await this.reviewService.getOne(id);
+  async getOne(@Param() param: ParamIdDto) {
+    return await this.reviewService.getOne(param.id);
   }
 
   @Post('/')
@@ -44,14 +45,14 @@ export class ReviewController {
 
   @Patch('/:id')
   async update(
-    @Param('id') id: number,
+    @Param() param: ParamIdDto,
     @Body() updateReviewDto: UpdateReviewDto,
   ) {
-    return await this.reviewService.update(id, updateReviewDto);
+    return await this.reviewService.update(param.id, updateReviewDto);
   }
 
   @Delete('/:id')
-  async delete(@Param('id') id: number) {
-    return await this.reviewService.delete(id);
+  async delete(@Param() param: ParamIdDto) {
+    return await this.reviewService.delete(param.id);
   }
 }

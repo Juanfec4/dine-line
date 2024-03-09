@@ -12,6 +12,7 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { ParamIdDto } from 'src/common/dto/param-id.dto';
 
 @Controller('address')
 export class AddressController {
@@ -28,8 +29,8 @@ export class AddressController {
   }
 
   @Get('/:id')
-  async getOne(@Param('id') id: number) {
-    return this.addressService.getOne(id);
+  async getOne(@Param() param: ParamIdDto) {
+    return this.addressService.getOne(param.id);
   }
 
   @Post('/')
@@ -39,14 +40,14 @@ export class AddressController {
 
   @Patch('/:id')
   async update(
-    @Param('id') id: number,
+    @Param() param: ParamIdDto,
     @Body() updateAddressDto: UpdateAddressDto,
   ) {
-    return this.addressService.update(id, updateAddressDto);
+    return this.addressService.update(param.id, updateAddressDto);
   }
 
   @Delete('/:id')
-  async delete(@Param('id') id: number) {
-    return this.addressService.delete(id);
+  async delete(@Param() param: ParamIdDto) {
+    return this.addressService.delete(param.id);
   }
 }

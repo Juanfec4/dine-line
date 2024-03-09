@@ -12,6 +12,7 @@ import {
 import { PasswordResetToken } from '../../password-reset/entity/password-reset-token.entity';
 import { Address } from 'src/address/entity/address.entity';
 import { Review } from 'src/review/entity/review.entity';
+import { Favorite } from 'src/favorite/entity/favorite.entity';
 
 @Entity()
 export class User {
@@ -55,6 +56,9 @@ export class User {
 
   @OneToMany(() => Review, (review) => review.user)
   reviews: Review[];
+
+  @OneToMany(() => Favorite, (favorite) => favorite.user)
+  favorites: Favorite[];
 
   @CreateDateColumn()
   createdAt: Date;

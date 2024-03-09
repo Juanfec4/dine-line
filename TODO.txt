@@ -1,12 +1,5 @@
 TODO
 
-- Reviews module
-- Reviews relation -> MenuItem
-- Reviews relation -> User
-
-- Favorites module
-- Favorites relation -> User
-
 - Orders module
 - OrderItem[] relation -> Order 
 - Orders relation -> User
