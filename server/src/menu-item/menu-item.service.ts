@@ -10,9 +10,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MenuItem } from './entity/menu-item.entity';
 import { Repository } from 'typeorm';
 import { ItemCategory } from './entity/item-category.entity';
+import { Observable, Subject } from 'rxjs';
+import { SseAction } from 'src/common/enums';
 
 @Injectable()
 export class MenuItemService {
+  private menuItemsUpdateSubject = new Subject<any>();
+
   constructor(
     @InjectRepository(MenuItem)
     private readonly menuItemRepository: Repository<MenuItem>,
@@ -20,6 +24,16 @@ export class MenuItemService {
     private readonly itemCategoryRepository: Repository<ItemCategory>,
     private readonly imageService: ImageService,
   ) {}
+
+  //SSE Menu item updates
+  emitMenuItemUpdate(data: any) {
+    this.menuItemsUpdateSubject.next({ data: data });
+  }
+
+  //SSE Menu item updates
+  getMenuItemUpdates(): Observable<MessageEvent> {
+    return this.menuItemsUpdateSubject.asObservable();
+  }
 
   async create(baseUrl: string, createMenuItemDto: CreateMenuItemDto) {
     //Check if image file exists
@@ -41,6 +55,9 @@ export class MenuItemService {
     });
 
     await this.menuItemRepository.save(menuItem);
+
+    //SSE Event (Create)
+    this.emitMenuItemUpdate({ action: SseAction.CREATE, menuItem: menuItem });
   }
 
   async update(
@@ -85,6 +102,12 @@ export class MenuItemService {
     }
     //Save the updated menu item
     await this.menuItemRepository.save(updatedMenuItem);
+
+    //SSE Event (Update)
+    this.emitMenuItemUpdate({
+      action: SseAction.UPDATE,
+      menuItem: updatedMenuItem,
+    });
   }
 
   async getAll(page: number, pageSize: number, categoryId?: number) {
@@ -127,6 +150,12 @@ export class MenuItemService {
 
     //Delete menu item
     await this.menuItemRepository.delete(id);
+
+    //SSE Event (Delete)
+    this.emitMenuItemUpdate({
+      action: SseAction.DELETE,
+      id: id,
+    });
 
     //Check if menu item category is not used by any menu item
     const menuItemCategory = await this.itemCategoryRepository.findOne({

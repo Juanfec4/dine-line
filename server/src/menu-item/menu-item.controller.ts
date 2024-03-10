@@ -9,6 +9,7 @@ import {
   Post,
   Query,
   Req,
+  Sse,
 } from '@nestjs/common';
 import { AdminRoute } from 'src/common/decorators/admin-route.decorator';
 import { Public } from 'src/common/decorators/public.decorator';
@@ -17,6 +18,7 @@ import { UpdateMenuItemDto } from './dto/update-menu-item.dto';
 import { Request } from 'express';
 import { GetMenuItemsQueryDto } from './dto/get-menu-items-query.dto';
 import { ParamIdDto } from 'src/common/dto/param-id.dto';
+import { Observable } from 'rxjs';
 
 @Controller('menu-item')
 export class MenuItemController {
@@ -43,6 +45,12 @@ export class MenuItemController {
   @Get('/:id')
   async getOne(@Param() param: ParamIdDto) {
     return await this.menuItemService.getOne(param.id);
+  }
+
+  @Public()
+  @Sse('updates')
+  sse(): Observable<MessageEvent> {
+    return this.menuItemService.getMenuItemUpdates();
   }
 
   @AdminRoute()

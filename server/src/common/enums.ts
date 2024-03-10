@@ -40,3 +40,9 @@ export enum PaymentMethods {
   PAYPAL,
   CRYPTO,
 }
+
+export enum SseAction {
+  UPDATE = 'update',
+  CREATE = 'create',
+  DELETE = 'delete',
+}

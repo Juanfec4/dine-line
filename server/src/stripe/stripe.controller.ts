@@ -1,10 +1,13 @@
 import { StripeService } from './stripe.service';
 import { Controller, Header, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { Public } from 'src/common/decorators/public.decorator';
 
+@Public()
 @Controller('stripe')
 export class StripeController {
   constructor(private readonly stripeService: StripeService) {}
+
   @Post('webhooks')
   @Header('Content-Type', 'application/json')
   async handleWebhook(@Req() request: Request, @Res() response: Response) {
