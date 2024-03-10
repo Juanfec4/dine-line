@@ -1,10 +1,4 @@
 TODO
 
-- Orders module
-- OrderItem[] relation -> Order 
-- Orders relation -> User
-
-- Payments module
-- Payments relation -> Order
-- Payments relation -> User
+- Stripe integration
 

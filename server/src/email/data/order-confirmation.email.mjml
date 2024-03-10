@@ -1,0 +1,32 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <!-- Header -->
+        <mj-text font-size="20px" color="#333333" font-family="Helvetica, Arial, sans-serif">
+          Hello {{firstName}},
+        </mj-text>
+
+        <!-- Order Confirmation Message -->
+        <mj-text font-size="16px" color="#555555" font-family="Helvetica, Arial, sans-serif">
+          Thank you for your order! Your delicious food is on the way. Here are the details of your order:
+        </mj-text>
+
+        <!-- Order Details -->
+        <mj-text font-size="16px" color="#555555" font-family="Helvetica, Arial, sans-serif">
+          Order Number: <strong>{{orderCode}}</strong><br/>
+        </mj-text>
+        <!-- Footer Note -->
+        <mj-text font-size="14px" color="#888888" font-family="Helvetica, Arial, sans-serif" padding-top="20px">
+          If you have any questions, please contact our customer service. This is an automated message, please do not reply.
+        </mj-text>
+
+        <mj-text font-size="14px" color="#888888" font-family="Helvetica, Arial, sans-serif">
+          Enjoy your meal,<br/>
+          The Dine Line Team
+        </mj-text>
+
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

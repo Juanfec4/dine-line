@@ -23,4 +23,7 @@ export default Joi.object({
   MAIL_SERVICE: Joi.string(),
   ADMIN_USER: Joi.string(),
   ADMIN_PASS: Joi.string(),
+  STRIPE_SECRET_KEY: Joi.string(),
+  STRIPE_WEBHOOK_SECRET: Joi.string(),
+  FRONT_END_BASE_URL: Joi.string(),
 });

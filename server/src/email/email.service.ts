@@ -3,7 +3,7 @@ import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
 import { Queue } from 'bull';
 import { EmailPriority, EmailSubject, EmailTemplate } from 'src/common/enums';
-import { EmailJob, EmailPayload } from 'src/common/interfaces';
+import { Attachment, EmailJob, EmailPayload } from 'src/common/interfaces';
 
 @Injectable()
 export class EmailService {
@@ -18,6 +18,7 @@ export class EmailService {
     subject: EmailSubject,
     payload: EmailPayload,
     priority: EmailPriority,
+    attachment?: Attachment,
   ) {
     //Construct email HTML
     const emailHtml = await this.templateService.createHTML(template, payload);
@@ -28,6 +29,8 @@ export class EmailService {
       subject,
       html: emailHtml,
     };
+
+    if (attachment) email.attachment = attachment;
 
     //Add job to queue
     await this.emailQueue.add('send-email', email, { priority });

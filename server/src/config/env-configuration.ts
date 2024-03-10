@@ -2,6 +2,7 @@ import { TTL_ONE_MINUTE } from './../common/constants';
 
 export default () => ({
   port: parseInt(process.env.PORT),
+  frontEndUrl: process.env.FRONT_END_BASE_URL,
   database: {
     type: 'postgres',
     host: process.env.DB_HOST,
@@ -36,5 +37,9 @@ export default () => ({
   admin: {
     username: process.env.ADMIN_USER,
     password: process.env.ADMIN_PASS,
+  },
+  stripe: {
+    secretKey: process.env.STRIPE_SECRET_KEY,
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
   },
 });

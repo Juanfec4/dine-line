@@ -13,6 +13,7 @@ import { PasswordResetToken } from '../../password-reset/entity/password-reset-t
 import { Address } from 'src/address/entity/address.entity';
 import { Review } from 'src/review/entity/review.entity';
 import { Favorite } from 'src/favorite/entity/favorite.entity';
+import { Order } from 'src/order/entity/order.entity';
 
 @Entity()
 export class User {
@@ -59,6 +60,9 @@ export class User {
 
   @OneToMany(() => Favorite, (favorite) => favorite.user)
   favorites: Favorite[];
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
 
   @CreateDateColumn()
   createdAt: Date;
