@@ -15,6 +15,7 @@ import moment from 'moment';
 import { customAlphabet } from 'nanoid';
 import { PRT_EXPIRATION_INCREMENT_DAYS } from 'src/common/constants';
 import { EmailPriority, EmailSubject, EmailTemplate } from 'src/common/enums';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PasswordResetService {
@@ -24,6 +25,7 @@ export class PasswordResetService {
     private readonly userService: UserService,
     private readonly hashingService: HashingService,
     private readonly emailService: EmailService,
+    private readonly configService: ConfigService,
   ) {}
 
   async forgotPassword(forgotPasswordDto: ForgotPasswordDto) {
@@ -74,7 +76,7 @@ export class PasswordResetService {
       EmailSubject.PASSWORD_CHANGE,
       {
         firstName: user.firstName,
-        passwordChangeLink: `http://localhost:3000/password-change/${tokenValue}`,
+        passwordChangeLink: `${this.configService.get<string>('frontEndUrl')}/password-change/${tokenValue}`,
       },
       EmailPriority.HIGH,
     );

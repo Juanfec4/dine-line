@@ -9,6 +9,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get<ConfigService>(ConfigService);
 
+  //CORS
+  //const origin = config.get<string>('frontEndUrl');
+  app.enableCors({ origin: '*' });
+
   //Create app admin
   const username = config.get<string>('admin.username');
   const password = config.get<string>('admin.password');

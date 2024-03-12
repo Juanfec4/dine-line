@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config';
 import { EmailService } from './../../../email/email.service';
 import { UserService } from './../user/user.service';
 import { RequestVerificationDto } from '../../dto/request-verification.dto';
@@ -27,6 +28,7 @@ export class VerificationService {
     private readonly verificationTokenRepository: Repository<VerificationToken>,
     private readonly userService: UserService,
     private readonly emailService: EmailService,
+    private readonly configService: ConfigService,
   ) {}
 
   async requestVerification(requestVerificationDto: RequestVerificationDto) {
@@ -84,7 +86,7 @@ export class VerificationService {
       {
         firstName: user.firstName,
         verificationCode: tokenValue,
-        verificationLink: `http://localhost:3000/verify/${tokenValue}`,
+        verificationLink: `${this.configService.get<string>('frontEndUrl')}/verify/${tokenValue}`,
       },
       EmailPriority.HIGH,
     );
